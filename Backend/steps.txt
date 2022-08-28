@@ -1,0 +1,13 @@
+1 -> Install all dependencies first. i.e. node-modules(npm init), express, nodemon, cors, mongoose, dotenv.
+2 -> Create index.js file to create/start the server.
+3 -> To create server just use express.
+4 -> After creating server now time to connect to DB.
+5 -> Go on mongoDB site and create a DB.
+6 -> After creating DB on mongoose site, create a dotenv file in which mention your DB url.
+7 -> After creating dotenv file, create a variable of mongoose and connect to DB using it.
+    i.e. -> mongoose.connect( process.env.DB,{ useUnifiedTopology: true, useNewUrlParser: true },() => console.log("connected to DB successfully!!"));
+    the above step will successfully connect you to the DB.
+8 -> After connecting to DB successfully, create model in which we create schema(what type of data we want with it's types).
+9 -> Create route for all api in seperate routes folder by importing express router method i.e. (const router = require("express").Router();)
+10 -> Create controllers for logic which will retrieve data from DB.
+11 -> After creating controllers, create logic functions to get,update, create or delete.
