@@ -9,4 +9,4 @@ const customerSchema = new mongoose.Schema({
     plan: String
 });
 
-module.export = mongoose.model("Customers", customerSchema);
+module.exports = mongoose.model("Customers", customerSchema);
