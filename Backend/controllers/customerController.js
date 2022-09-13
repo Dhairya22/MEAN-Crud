@@ -41,14 +41,45 @@ const customer_create = async (req, res) => {
 };
 
 // Update Customer
-const customer_update = async (req, res) => { };
+const customer_update = async (req, res) => {
+    try {
+        const customer = {
+            name: req.body.name,
+            addres: req.body.addres,
+            contact_no: req.body.contact_no,
+            box_no: req.body.box_no,
+            status: req.body.status,
+            plan: req.body.plan
+        }
+
+        const updateCustomer = await Customer.findByIdAndUpdate(
+            { _id: req.params.customerId },
+            customer
+        );
+        res.json(updateCustomer);
+    } catch (error) {
+        res.json({ message: error })
+    }
+ };
 
 // Delete Customer
-const customer_delete = async (req, res) => { 
-    try{
-        
-    } catch (err) {
+const customer_delete = async (req, res) => {
+    try {
+        const customer = {
+            name: req.body.name,
+            addres: req.body.addres,
+            contact_no: req.body.contact_no,
+            box_no: req.body.box_no,
+            status: req.body.status,
+            plan: req.body.plan
+        }
 
+        const deleteCustomer = await Customer.findByIdAndDelete(
+            { _id: req.params.customerId },
+            customer
+        )
+    } catch (err) {
+        res.json({ message: error });
     }
 };
 
