@@ -1,29 +1,37 @@
-//create this basic file to create server on diif ports
+const express = require('express');
+require('./config');
+const videoSchema = require('./model/videos');
 
-const port = 4000;
-const express = require("express");
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+const PORT = 4200;
+
 const app = express();
-// const cors = require("cors");
-
-dotenv.config();
-
-// Connect to DB
-mongoose.connect(
-    process.env.DB,
-    { useUnifiedTopology: true, useNewUrlParser: true },
-    () => console.log("connected to DB successfully!!")
-);
-
-// Import Routes
-const customerRoutes = require("./routes/customer");
-
-// Middlewares
 app.use(express.json());
-// app.cors(cors());
 
-// Routes Middleware
-app.use("/api/customers",customerRoutes);
+app.post('/create', async (req, resp) => {
+    let data = new videoSchema(req.body);
+    let result = await data.save();
+    resp.send(result);
+});
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.get('/list', async (req,resp) => {
+    let data = await videoSchema.find();
+    resp.send(data);
+});
+
+app.put('/update/:_id', async (req, resp) => {
+    console.log(req.body);
+    let data = await videoSchema.updateOne(
+        { _id: req.params._id },
+        { $set: req.body }
+    );
+    resp.send(data);
+});
+
+app.delete('/delete/:_id', async (req, resp) => {
+    let data = await videoSchema.deleteOne(
+        { _id: req.params }
+    );
+    resp.send(data);
+});
+
+app.listen(PORT);
