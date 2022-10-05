@@ -1,11 +1,13 @@
 const express = require('express');
 require('./config');
 const videoSchema = require('./model/videos');
+var cors = require("cors");
 
-const PORT = 4200;
+const PORT = 5000;
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.post('/create', async (req, resp) => {
     let data = new videoSchema(req.body);

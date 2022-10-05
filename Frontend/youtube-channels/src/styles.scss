@@ -1,0 +1,153 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.searchInputWrapper {
+    position: relative;
+}
+
+.searchInput {
+    width: 30rem;
+    height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: 2rem;
+    border: 1px solid #ccc;
+    transition: transform 0.1s ease-in-out;
+}
+
+::placeholder {
+    color: #a1a1a1;
+}
+
+/* hide the placeholder text on focus */
+:focus::placeholder {
+    text-indent: -999px
+}
+
+.searchInput:focus {
+    outline: none;
+    transform: scale(1.1);
+    transition: all 0.1s ease-in-out;
+}
+
+.searchInputIcon {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.7rem;
+    color: #a1a1a1;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.container:focus-within>.searchInputWrapper>.searchInputIcon {
+    right: 0.2rem;
+}
+
+body.dark {
+    background-color: #292c35;
+
+    mat-toolbar {
+        background-color: #292c35;
+
+        h1 {
+            color: white;
+        }
+
+        mat-icon {
+            color: white;
+        }
+    }
+
+    input {
+        background-color: #292c35;
+    }
+
+    .searchInput {
+        border: 1px solid #ccc;
+        color: white;
+    }
+
+    mat-card{
+        background-color: #292c35;
+        border: 1px solid #ccc;
+        color: white;
+
+        mat-card-subtitle{
+            color: white;
+        }
+    }
+}
+
+.checkbox {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+}
+
+.label {
+    cursor: pointer;
+    width: 30px;
+    height: 18px;
+    background-color: #111;
+    display: flex;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    position: relative;
+    transform: scale(1.5);
+}
+
+.ball {
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    border-radius: 50%;
+    transition: transform 0.2s linear;
+}
+
+/*  target the elemenent after the label*/
+.checkbox:checked+.label .ball {
+    transform: translateX(13px);
+}
+
+.fa-moon {
+    color: pink;
+}
+
+.fa-sun {
+    color: yellow;
+}
