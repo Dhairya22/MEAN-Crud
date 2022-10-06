@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { YoutubeListComponent } from './components/youtube-list/youtube-list.component';
 import { YoutubeCreateComponent } from './components/youtube-create/youtube-create.component';
 import { SharedModule } from './shared/shared.module';
+import { HttpInterceptor } from './core/interceptors/http.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,11 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ {provide: HttpInterceptor, useClass: HttpInterceptor, multi: true} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

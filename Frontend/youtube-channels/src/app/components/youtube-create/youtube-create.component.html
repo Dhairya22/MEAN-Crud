@@ -1,1 +1,57 @@
-<p>youtube-create works!</p>
+<h1> <strong> {{btnTitle}} Channel </strong> </h1>
+
+<form class="example-form" [formGroup]="channelForm">
+    <mat-form-field style="width: 45%;">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+        <mat-error>Please provide name</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 45%;">
+        <mat-label>Channel Name</mat-label>
+        <input matInput formControlName="channel_name">
+        <mat-error>Please provide channel name</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 45%;">
+        <mat-label>Type</mat-label>
+        <input matInput formControlName="type">
+        <mat-error>Please provide chanel type</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 45%;">
+        <mat-label>Total Videos</mat-label>
+        <input matInput formControlName="total_videos" type="number">
+        <mat-error>Please provide total videos</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+        <mat-label>Channel Link</mat-label>
+        <input matInput formControlName="channel_link">
+        <mat-error>Please provide channel link</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+        <mat-error>Please provide description</mat-error>
+    </mat-form-field>
+
+    <div class="file-upld">
+        <div>
+            <img *ngFor='let preview of previews' [src]="preview" class="preview" width="150px">
+        </div>
+        <input type="file" formControlName="img" accept="image/*" multiple (change)="selectFiles($event)">
+    </div>
+</form>
+
+<div class="btn">
+    <button mat-raised-button color="primary" *ngIf="!isUpdate"
+        [mat-dialog-close]="{ payload: channelForm.getRawValue(), isUpdate: false }"
+        [disabled]="channelForm.invalid">Create</button>
+
+    <button mat-raised-button color="primary" *ngIf="isUpdate"
+        [mat-dialog-close]="{ payload: channelForm.getRawValue(), isUpdate: true }"
+        [disabled]="channelForm.invalid">Update</button>
+    <button mat-stroked-button color="primary" mat-dialog-close>Cancel</button>
+</div>

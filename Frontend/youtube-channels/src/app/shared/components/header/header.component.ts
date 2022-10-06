@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  @Output() text = new EventEmitter();
+  searchForm = new FormGroup({
+    search: new FormControl('')
+  })
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  getText(searchText: any): void {
+    this.text.emit(searchText.target.value);
+  }
 }

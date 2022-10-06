@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 require('./config');
 const videoSchema = require('./model/videos');
 var cors = require("cors");
@@ -20,8 +21,12 @@ app.get('/list', async (req,resp) => {
     resp.send(data);
 });
 
+app.get('/list/:_id', async (req,resp) => {
+    let data = await videoSchema.findById(req.params._id);
+    resp.send(data);
+});
+
 app.put('/update/:_id', async (req, resp) => {
-    console.log(req.body);
     let data = await videoSchema.updateOne(
         { _id: req.params._id },
         { $set: req.body }
@@ -36,4 +41,40 @@ app.delete('/delete/:_id', async (req, resp) => {
     resp.send(data);
 });
 
-app.listen(PORT);
+app.delete('/delete', async (req, resp) => {
+    let data = await videoSchema.deleteMany({
+        _id: {
+            $in: req.body
+        }
+    });
+    resp.send(data);
+});
+
+app.get('/search/:key', async (req, resp) => {
+    let data = await videoSchema.find({
+        "$or": [
+            { "name": { $regex: req.params.key }},
+            { "channel_name": { $regex: req.params.key }},
+            { "type": { $regex: req.params.key }}
+        ]
+    });
+    resp.send(data);
+});
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: function(req, file, cb){
+            cb(null,"uploads")
+        },
+        filename: function(req, file, cb){
+            cb(null, file.fieldname + "-" + Date.now() + ".jpg")
+        }
+    })
+}).single("logo");
+app.post("/upload", upload, (req, resp) => {
+    resp.send("file uploaded")
+});
+
+app.listen((PORT || 5500), () => {
+    console.log(`Server is running on PORT ${PORT}` );
+});

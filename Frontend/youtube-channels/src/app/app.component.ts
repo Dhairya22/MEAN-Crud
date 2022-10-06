@@ -9,10 +9,5 @@ export class AppComponent {
   title = 'youtube-channels';
 
   ngOnInit(): void {
-    const checkbox: any = document.getElementById('checkbox');
-
-    checkbox.addEventListener('change', () => {
-      document.body.classList.toggle('dark');
-    })
   }
 }
