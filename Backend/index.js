@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 require('./config');
+require('./auth');
 const videoSchema = require('./model/videos');
 var cors = require("cors");
 
@@ -42,12 +43,13 @@ app.delete('/delete/:_id', async (req, resp) => {
 });
 
 app.delete('/delete', async (req, resp) => {
-    let data = await videoSchema.deleteMany({
-        _id: {
-            $in: req.body
-        }
-    });
-    resp.send(data);
+    console.log(req.body);
+    // let data = await videoSchema.deleteMany({
+    //     _id: {
+    //         $in: req.body
+    //     }
+    // });
+    // resp.send(data);
 });
 
 app.get('/search/:key', async (req, resp) => {
@@ -71,10 +73,11 @@ const upload = multer({
         }
     })
 }).single("logo");
+
 app.post("/upload", upload, (req, resp) => {
     resp.send("file uploaded")
 });
 
-app.listen((PORT || 5500), () => {
+app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}` );
 });

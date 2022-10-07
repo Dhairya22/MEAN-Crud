@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class HeaderComponent implements OnInit {
 
   @Output() text = new EventEmitter();
+  
   searchForm = new FormGroup({
     search: new FormControl('')
   })

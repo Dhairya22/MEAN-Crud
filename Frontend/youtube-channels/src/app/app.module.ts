@@ -9,12 +9,16 @@ import { YoutubeCreateComponent } from './components/youtube-create/youtube-crea
 import { SharedModule } from './shared/shared.module';
 import { HttpInterceptor } from './core/interceptors/http.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/users/login/login.component';
+import { RegisterComponent } from './components/users/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     YoutubeListComponent,
-    YoutubeCreateComponent
+    YoutubeCreateComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

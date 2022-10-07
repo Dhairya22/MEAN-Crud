@@ -14,6 +14,14 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
+  login(payload: any): Observable<any> {
+    return this.http.post(`${environment.loginUrl}login`, payload);
+  }
+
+  signup(payload: any): Observable<any> {
+    return this.http.post(`${environment.loginUrl}register`, payload);
+  }
+
   getList(): Observable<any> {
     return this.http.get(`${environment.baseUrl}list`);
   }

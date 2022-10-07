@@ -1,0 +1,19 @@
+<div class="content">
+    <div class="flex-div">
+        <div class="name-content">
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <img src="../assets/Images/youtube.png" width="150px" alt="" style="margin: -30px;">
+                <h1 class="logo">
+                    Youtube</h1>
+            </div>
+            <p>Create your own playlist and share them with world.</p>
+        </div>
+        <form [formGroup]="signupForm">
+            <input type="text" placeholder="Create Name" formControlName="name" />
+            <input type="password" placeholder="Create Password" formControlName="password">
+            <button class="login" (click)="signup()">Sign Up</button>
+            <hr>
+            <button class="create-account" [routerLink]="['/login']">Login</button>
+        </form>
+    </div>
+</div>
