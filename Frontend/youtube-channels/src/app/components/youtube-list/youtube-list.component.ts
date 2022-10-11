@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs';
 import { SubscriptionDisposer } from 'src/app/core/disposer';
 import { ApiService } from 'src/app/core/services/api.service';
+import { CommonService } from 'src/app/core/services/common.service';
 import Swal from 'sweetalert2';
 import { YoutubeCreateComponent } from '../youtube-create/youtube-create.component';
 
@@ -18,7 +19,8 @@ export class YoutubeListComponent extends SubscriptionDisposer implements OnInit
 
   constructor(
     private apiService: ApiService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private commonService: CommonService
   ) { super(); }
 
   ngOnInit(): void {
@@ -29,6 +31,21 @@ export class YoutubeListComponent extends SubscriptionDisposer implements OnInit
     })
 
     this.getList();
+  }
+
+  @HostListener('mouseenter')
+  mouseenter() {
+    this.commonService.checkTimeStamp();
+  }
+
+  @HostListener('mouseover')
+  mouseover() {
+    this.commonService.checkTimeStamp();
+  }
+
+  @HostListener('mouseout')
+  mouseout() {
+    this.commonService.checkTimeStamp();
   }
 
   getList(): void {

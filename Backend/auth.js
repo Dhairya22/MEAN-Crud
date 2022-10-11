@@ -1,16 +1,12 @@
 // const bcrypt = require('bcrypt');
 const express = require('express');
 const jwt = require("jsonwebtoken");
-var cors = require("cors");
 const SECRET_KEY = "mynameisdhairyaandimanangulardeveloper";
 const userSchema = require('./model/users');
-
-const app = express();
-app.use(express.json());
-app.use(cors());
+const router = express.Router();
 
 // Register API
-app.post('/register', async (req, resp) => {    
+router.post('/register', async (req, resp) => {    
     try {
         const existingUser = await userSchema.findOne({ name: req.body.name });
         if (existingUser == null) {
@@ -19,9 +15,9 @@ app.post('/register', async (req, resp) => {
             // const hashedPassword = await bcrypt.hash(req.body.password, 10);
             let data = new userSchema({ name: user, password: password });
             let result = await data.save();
-            resp.status(200).send(result);
+            resp.status(200).send({message: 'Record Saved Successfully !!',result});
         } else {
-            resp.status(403).send("User Already Exist !!");
+            resp.status(200).send({message: "Username already taken !!"});
         }
     } catch (err) {
         resp.status(500).send({message: err});
@@ -29,12 +25,18 @@ app.post('/register', async (req, resp) => {
 });
 
 // Login API
-app.post('/login', async (req, resp) => {
+router.post('/login', async (req, resp) => {
     try{
         const existingUser = await userSchema.findOne({ name: req.body.name, password: req.body.password });
         if(existingUser != null){
-            const token = await jwt.sign({ name: req.body.name }, SECRET_KEY);
-            resp.status(200).send({name: req.body.name, token: token});
+            const token = await jwt.sign({ name: req.body.name }, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: "15 minutes"
+            });
+
+            // Check if user is valid or not.
+            const userVer = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+            
+            resp.status(200).send({name: req.body.name, token: token, expiresIn: userVer.exp});
         } else {
             resp.status(401).send({message: "Invalid Username or Password !!"});
         }
@@ -43,6 +45,4 @@ app.post('/login', async (req, resp) => {
     }
 });
 
-app.listen(5500, () => {
-    console.log("Auth Server is live 5500");
-});
+module.exports = router;

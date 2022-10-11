@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { SubscriptionDisposer } from 'src/app/core/disposer';
 import { ApiService } from 'src/app/core/services/api.service';
 import { takeUntil } from "rxjs";
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { YoutubeListComponent } from '../youtube-list/youtube-list.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from 'src/app/core/services/common.service';
 
 @Component({
   selector: 'app-youtube-create',
@@ -21,6 +22,7 @@ export class YoutubeCreateComponent extends SubscriptionDisposer implements OnIn
 
   constructor(
     private apiService: ApiService,
+    private commonService: CommonService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { super(); }
 
@@ -30,6 +32,21 @@ export class YoutubeCreateComponent extends SubscriptionDisposer implements OnIn
       this.isUpdate = true;
       this.getDetails(this.data._id);
     }
+  }
+
+  @HostListener('mouseenter')
+  mouseenter() {
+    this.commonService.checkTimeStamp();
+  }
+
+  @HostListener('mouseover')
+  mouseover() {
+    this.commonService.checkTimeStamp();
+  }
+
+  @HostListener('mouseout')
+  mouseout() {
+    this.commonService.checkTimeStamp();
   }
 
   prepareForm(): void {
@@ -68,7 +85,6 @@ export class YoutubeCreateComponent extends SubscriptionDisposer implements OnIn
 
   selectFiles(event: any): void {
     this.selectedFiles = [];
-    this.previews = [];
     this.selectedFiles = event.target.files;
     if (this.selectedFiles && this.selectedFiles[0]) {
       const numberOfFiles = this.selectedFiles.length;

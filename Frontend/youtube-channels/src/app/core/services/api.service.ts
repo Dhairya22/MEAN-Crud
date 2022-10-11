@@ -9,17 +9,23 @@ import { environment } from 'src/environments/environment';
 export class ApiService {
 
   loader = new BehaviorSubject<Boolean>(false);
+  token = new BehaviorSubject<any>('');
+  isAuthenticate: boolean = false;
 
   constructor(
     private http: HttpClient
   ) { }
 
+  // isLoggedIn(): boolean {
+  //   return !!localStorage.getItem('token');
+  // }
+
   login(payload: any): Observable<any> {
-    return this.http.post(`${environment.loginUrl}login`, payload);
+    return this.http.post(`${environment.baseUrl}login`, payload);
   }
 
   signup(payload: any): Observable<any> {
-    return this.http.post(`${environment.loginUrl}register`, payload);
+    return this.http.post(`${environment.baseUrl}register`, payload);
   }
 
   getList(): Observable<any> {

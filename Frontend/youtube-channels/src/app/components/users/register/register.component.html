@@ -11,6 +11,7 @@
         <form [formGroup]="signupForm">
             <input type="text" placeholder="Create Name" formControlName="name" />
             <input type="password" placeholder="Create Password" formControlName="password">
+            <input type="password" placeholder="Re-type Password" formControlName="re_password">
             <button class="login" (click)="signup()">Sign Up</button>
             <hr>
             <button class="create-account" [routerLink]="['/login']">Login</button>

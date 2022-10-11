@@ -1,8 +1,29 @@
-.toggle-btn{
+.container{
+    .searchInputWrapper{
+        svg {
+            color: #a1a1a1 !important;
+        }
+    }
+}
+
+.toggle-btn {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    svg {
+
+    .user_info {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
         margin: 25px;
+        column-gap: 15px;
+
+        svg {
+            cursor: pointer;
+        }
     }
+
+    // h1 {
+    //     margin: 25px;
+    // }
 }

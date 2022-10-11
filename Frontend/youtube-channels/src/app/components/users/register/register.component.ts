@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SubscriptionDisposer } from 'src/app/core/disposer';
 import { takeUntil } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +16,9 @@ export class RegisterComponent extends SubscriptionDisposer implements OnInit {
   signupForm!: FormGroup;
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private toastr: ToastrService,
+    private router: Router
   ) { super(); }
 
   ngOnInit(): void {
@@ -25,13 +29,24 @@ export class RegisterComponent extends SubscriptionDisposer implements OnInit {
     this.signupForm = new FormGroup({
       name: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
+      re_password: new FormControl('', Validators.required),
     });
   }
 
   signup(): void {
-    this.apiService.signup(this.signupForm.getRawValue())
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(resp => {
-      });
+    if(this.signupForm.valid){
+      this.apiService.signup(this.signupForm.getRawValue())
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(resp => {
+          if(resp.result){
+            this.toastr.success(resp.message);
+            this.router.navigate(['login']);
+          }else {
+            this.toastr.error(resp.message);
+          }
+        });
+    }else {
+      this.toastr.error('Please enter details !!');
+    }
   }
 }

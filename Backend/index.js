@@ -1,15 +1,18 @@
 const express = require('express');
 const multer = require('multer');
 require('./config');
-require('./auth');
+const auth = require('./auth');
 const videoSchema = require('./model/videos');
 var cors = require("cors");
+require('dotenv').config();
 
-const PORT = 5000;
+const PORT = process.env.PORT;
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.use('/',auth);
 
 app.post('/create', async (req, resp) => {
     let data = new videoSchema(req.body);
